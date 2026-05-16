@@ -1,0 +1,375 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Satoshi font ──────────────────────────────────────────── */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,800,700,500,400,300&display=swap');
+
+/* ─── CSS Variables ─────────────────────────────────────────── */
+:root {
+  --rocket-red: #FF2424;
+  --rocket-cyan: #00D2FF;
+  --rocket-gold: #D4AF37;
+  --rocket-space: #0A1128;
+  --rocket-carbon: #121212;
+  --rocket-purple: #8B5CF6;
+  --rocket-magenta: #EC4899;
+  --rocket-dark: #050814;
+
+  --gradient-hero: linear-gradient(135deg, #FF2424 0%, #8B5CF6 50%, #00D2FF 100%);
+  --gradient-iA: linear-gradient(90deg, #EC4899 0%, #8B5CF6 50%, #00D2FF 100%);
+  --gradient-rocket: linear-gradient(90deg, #FF2424 0%, #00D2FF 100%);
+  --gradient-bg: radial-gradient(ellipse at top, #1a1f3a 0%, #0A1128 50%, #050814 100%);
+  --gradient-cta: linear-gradient(90deg, #00D2FF 0%, #8B5CF6 100%);
+
+  --glass-bg: rgba(18, 18, 18, 0.6);
+  --glass-border: rgba(0, 210, 255, 0.15);
+
+  --font-satoshi: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── Base reset ────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-satoshi);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--rocket-dark);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ─── Typography helpers ────────────────────────────────────── */
+.text-gradient-iA {
+  background: var(--gradient-iA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-hero {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-rocket {
+  background: var(--gradient-rocket);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cta {
+  background: var(--gradient-cta);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(90deg, #D4AF37 0%, #F5E27A 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glow effects ──────────────────────────────────────────── */
+.text-glow-cyan {
+  text-shadow:
+    0 0 20px rgba(0, 210, 255, 0.6),
+    0 0 40px rgba(0, 210, 255, 0.3);
+}
+
+.text-glow-red {
+  text-shadow:
+    0 0 20px rgba(255, 36, 36, 0.6),
+    0 0 40px rgba(255, 36, 36, 0.3);
+}
+
+.text-glow-purple {
+  text-shadow:
+    0 0 20px rgba(139, 92, 246, 0.6),
+    0 0 40px rgba(139, 92, 246, 0.3);
+}
+
+.text-glow-gold {
+  text-shadow:
+    0 0 15px rgba(212, 175, 55, 0.6),
+    0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+/* ─── Price outline effect ──────────────────────────────────── */
+.price-outline {
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+  color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+
+.price-outline-cyan {
+  -webkit-text-stroke: 2px rgba(0, 210, 255, 0.9);
+  color: transparent;
+}
+
+.price-outline-purple {
+  -webkit-text-stroke: 2px rgba(139, 92, 246, 0.9);
+  color: transparent;
+}
+
+/* ─── Border gradient technique ─────────────────────────────── */
+.border-gradient-cyan {
+  position: relative;
+  background: var(--rocket-carbon);
+  border-radius: 24px;
+}
+
+.border-gradient-cyan::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #00D2FF, #8B5CF6, #EC4899);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.border-gradient-purple {
+  position: relative;
+  border-radius: 24px;
+}
+
+.border-gradient-purple::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #8B5CF6, #EC4899, #00D2FF);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.border-gradient-green {
+  position: relative;
+  border-radius: 24px;
+}
+
+.border-gradient-green::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #10B981, #00D2FF);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Grid background ───────────────────────────────────────── */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 210, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 210, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.grid-bg-subtle {
+  background-image:
+    linear-gradient(rgba(0, 210, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 210, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ─── Glassmorphism ─────────────────────────────────────────── */
+.glass {
+  background: rgba(10, 17, 40, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 210, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(6, 10, 24, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 210, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(18, 18, 30, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Shimmer button animation ──────────────────────────────── */
+.btn-shimmer {
+  background-size: 200% auto;
+  transition: background-position 0.5s ease;
+}
+
+.btn-shimmer:hover {
+  background-position: right center;
+}
+
+/* ─── Marquee strip ─────────────────────────────────────────── */
+.marquee-track {
+  display: flex;
+  animation: marquee 35s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ─── Accordion animation ───────────────────────────────────── */
+.accordion-content {
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s ease;
+}
+
+/* ─── Orbital ring ──────────────────────────────────────────── */
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes orbit-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+.orbit-cw  { animation: orbit-cw  70s linear infinite; }
+.orbit-ccw { animation: orbit-ccw 90s linear infinite; }
+
+/* ─── Floating icons ────────────────────────────────────────── */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-14px) rotate(3deg); }
+  66%       { transform: translateY(-6px) rotate(-2deg); }
+}
+
+.float-icon         { animation: floatY 7s ease-in-out infinite; }
+.float-icon-delay1  { animation: floatY 7s ease-in-out 1.5s infinite; }
+.float-icon-delay2  { animation: floatY 7s ease-in-out 3s infinite; }
+.float-icon-delay3  { animation: floatY 7s ease-in-out 4.5s infinite; }
+
+/* ─── Pulse glow keyframes ──────────────────────────────────── */
+@keyframes pulseGlowCyan {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 210, 255, 0.3); }
+  50%       { box-shadow: 0 0 50px rgba(0, 210, 255, 0.7), 0 0 100px rgba(0, 210, 255, 0.3); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.025); }
+}
+
+.animate-pulse-glow { animation: pulseGlowCyan 3s ease-in-out infinite; }
+.animate-breathe    { animation: breathe 4.5s ease-in-out infinite; }
+
+/* ─── Countdown digit style ─────────────────────────────────── */
+.countdown-digit {
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--rocket-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 210, 255, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 210, 255, 0.5);
+}
+
+/* ─── Selection color ───────────────────────────────────────── */
+::selection {
+  background: rgba(0, 210, 255, 0.3);
+  color: #ffffff;
+}
+
+/* ─── Focus ring ────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--rocket-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Noise overlay (optional texture) ─────────────────────── */
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  z-index: 9999;
+}
+
+/* ─── Utility: underline gradient ───────────────────────────── */
+.underline-gradient {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-gradient::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #00D2FF, #8B5CF6, #EC4899);
+  border-radius: 2px;
+}
+
+/* ─── Card hover glow ───────────────────────────────────────── */
+.card-hover-cyan:hover {
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}
+
+.card-hover-purple:hover {
+  box-shadow: 0 0 40px rgba(139, 92, 246, 0.2), 0 20px 60px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px);
+  transition: all 0.3s ease;
+}

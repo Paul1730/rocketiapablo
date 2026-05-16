@@ -237,7 +237,9 @@ export default function Hero() {
         >
           {/* Primary CTA — locked until 80% */}
           <motion.a
-            href={ctaEnabled ? '#pricing' : undefined}
+            href={ctaEnabled ? 'https://belezateam.com//link/page/EMPRENDEDOR' : undefined}
+            target={ctaEnabled ? '_blank' : undefined}
+            rel={ctaEnabled ? 'noopener noreferrer' : undefined}
             whileHover={ctaEnabled ? { scale: 1.05 } : {}}
             whileTap={ctaEnabled ? { scale: 0.97 } : {}}
             className="relative inline-flex items-center justify-center gap-2.5 rounded-full font-black text-white overflow-hidden transition-all duration-500 select-none"

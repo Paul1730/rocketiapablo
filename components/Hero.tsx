@@ -216,11 +216,12 @@ export default function Hero() {
               transition={{ delay: 1 }}
               className="absolute -bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold"
               style={{
-                background: 'linear-gradient(90deg, rgba(0,210,255,0.12), rgba(139,92,246,0.12))',
-                border: '1px solid rgba(0,210,255,0.35)',
-                color: '#00D2FF',
+                background: 'linear-gradient(90deg, rgba(0,210,255,0.18), rgba(139,92,246,0.18))',
+                border: '1px solid rgba(0,210,255,0.5)',
+                color: '#ffffff',
                 whiteSpace: 'nowrap',
-                boxShadow: '0 0 16px rgba(0,210,255,0.12)',
+                boxShadow: '0 0 20px rgba(0,210,255,0.15)',
+                textShadow: '0 0 12px rgba(0,210,255,0.8)',
               }}
             >
               <Lock size={11} />

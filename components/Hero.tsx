@@ -247,7 +247,7 @@ export default function Hero() {
               }}
             >
               <Lock size={11} />
-              El botón se activa cuando completes el 80% del video
+              El botón se activa cuando completes el 70% del video
             </motion.div>
           )}
         </motion.div>
@@ -259,7 +259,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 mb-10"
         >
-          {/* Primary CTA — locked until 80% */}
+          {/* Primary CTA — locked until 70% */}
           <motion.a
             href={ctaEnabled ? 'https://belezateam.com//link/page/EMPRENDEDOR' : undefined}
             target={ctaEnabled ? '_blank' : undefined}

@@ -151,7 +151,7 @@ export default function Hero() {
           >
             <video
               ref={videoRef}
-              src="/Tutorial.mp4"
+              src="/VSL_RocketIA.mp4"
               autoPlay
               muted
               playsInline
@@ -160,39 +160,61 @@ export default function Hero() {
               style={{ maxHeight: '60vh', objectFit: 'cover' }}
             />
 
-            {/* Mute / Unmute button */}
-            <motion.button
-              onClick={toggleMute}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.93 }}
-              aria-label={isMuted ? 'Activar audio' : 'Silenciar'}
-              className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 rounded-full font-bold text-sm transition-all duration-300"
-              style={{
-                background: isMuted
-                  ? 'rgba(10,17,40,0.85)'
-                  : 'rgba(0,210,255,0.15)',
-                border: isMuted
-                  ? '1px solid rgba(255,255,255,0.15)'
-                  : '1px solid rgba(0,210,255,0.5)',
-                color: isMuted ? 'rgba(255,255,255,0.6)' : '#00D2FF',
-                backdropFilter: 'blur(10px)',
-                boxShadow: isMuted
-                  ? 'none'
-                  : '0 0 16px rgba(0,210,255,0.25)',
-              }}
-            >
-              {isMuted ? (
-                <>
-                  <VolumeX size={16} />
-                  <span>Activar audio</span>
-                </>
-              ) : (
-                <>
-                  <Volume2 size={16} style={{ filter: 'drop-shadow(0 0 6px rgba(0,210,255,0.7))' }} />
-                  <span>Audio activo</span>
-                </>
-              )}
-            </motion.button>
+            {/* Mute / Unmute button — centered and prominent when muted */}
+            {isMuted && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div
+                  className="absolute inset-0"
+                  style={{ background: 'rgba(5,8,20,0.45)' }}
+                />
+                <motion.button
+                  onClick={toggleMute}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label="Activar audio"
+                  className="relative pointer-events-auto flex flex-col items-center gap-3 px-10 py-6 rounded-2xl font-black"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(0,210,255,0.2), rgba(139,92,246,0.2))',
+                    border: '2px solid rgba(0,210,255,0.6)',
+                    color: '#ffffff',
+                    backdropFilter: 'blur(16px)',
+                    boxShadow: '0 0 40px rgba(0,210,255,0.3), 0 0 80px rgba(0,210,255,0.1)',
+                    textShadow: '0 0 12px rgba(0,210,255,0.6)',
+                  }}
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <VolumeX size={36} style={{ filter: 'drop-shadow(0 0 10px rgba(0,210,255,0.8))' }} />
+                  <span style={{ fontSize: 'clamp(16px, 2vw, 22px)', letterSpacing: '0.02em' }}>
+                    🔊 Activar Audio
+                  </span>
+                </motion.button>
+              </div>
+            )}
+
+            {/* Small indicator when audio is active */}
+            {!isMuted && (
+              <motion.button
+                onClick={toggleMute}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.93 }}
+                aria-label="Silenciar"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute top-4 right-4 flex items-center gap-2 px-3 py-2 rounded-full font-bold text-sm"
+                style={{
+                  background: 'rgba(0,210,255,0.15)',
+                  border: '1px solid rgba(0,210,255,0.5)',
+                  color: '#00D2FF',
+                  backdropFilter: 'blur(10px)',
+                  boxShadow: '0 0 16px rgba(0,210,255,0.25)',
+                }}
+              >
+                <Volume2 size={15} style={{ filter: 'drop-shadow(0 0 6px rgba(0,210,255,0.7))' }} />
+                <span>Audio activo</span>
+              </motion.button>
+            )}
 
             {/* Progress bar at bottom of video */}
             <div className="absolute bottom-0 inset-x-0 h-1 bg-white/10">

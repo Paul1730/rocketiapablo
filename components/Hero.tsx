@@ -30,7 +30,7 @@ export default function Hero() {
     if (!video || !video.duration) return;
     const pct = video.currentTime / video.duration;
     setVideoProgress(pct);
-    if (pct >= 0.8 && !enabledRef.current) {
+    if (pct >= 0.7 && !enabledRef.current) {
       enabledRef.current = true;
       setCtaEnabled(true);
     }

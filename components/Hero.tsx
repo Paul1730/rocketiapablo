@@ -151,7 +151,7 @@ export default function Hero() {
           >
             <video
               ref={videoRef}
-              src="/VSL_RocketIA.mp4"
+              src="https://anbshiqmblyizfzaqydn.supabase.co/storage/v1/object/public/VSL/VSL_RocketIA.mp4"
               autoPlay
               muted
               playsInline

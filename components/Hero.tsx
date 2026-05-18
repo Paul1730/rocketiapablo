@@ -18,7 +18,9 @@ const AVATARS = [
   '/foto3.png',
 ];
 
-export default function Hero() {
+import { DEFAULT_LINK } from '@/lib/socios';
+
+export default function Hero({ ctaLink = DEFAULT_LINK }: { ctaLink?: string }) {
   const [ctaEnabled, setCtaEnabled] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
@@ -261,7 +263,7 @@ export default function Hero() {
         >
           {/* Primary CTA — locked until 70% */}
           <motion.a
-            href={ctaEnabled ? 'https://belezateam.com//link/page/EMPRENDEDOR' : undefined}
+            href={ctaEnabled ? ctaLink : undefined}
             target={ctaEnabled ? '_blank' : undefined}
             rel={ctaEnabled ? 'noopener noreferrer' : undefined}
             whileHover={ctaEnabled ? { scale: 1.05 } : {}}

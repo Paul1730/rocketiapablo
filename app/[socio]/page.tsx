@@ -1,14 +1,22 @@
+import { supabase } from '@/lib/supabase';
+import { DEFAULT_LINK } from '@/lib/socios';
 import Navbar from '@/components/Navbar';
 import Hero   from '@/components/Hero';
-import { socios, DEFAULT_LINK } from '@/lib/socios';
 
-export default function SocioPage({
+export const dynamic = 'force-dynamic';
+
+export default async function SocioPage({
   params,
 }: {
   params: { socio: string };
 }) {
-  const socio = socios[params.socio.toLowerCase()];
-  const link  = socio?.link ?? DEFAULT_LINK;
+  const { data } = await supabase
+    .from('socios')
+    .select('link')
+    .eq('slug', params.socio.toLowerCase())
+    .maybeSingle();
+
+  const link = data?.link ?? DEFAULT_LINK;
 
   return (
     <main className="min-h-screen bg-rocket-dark">

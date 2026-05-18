@@ -1,15 +1,17 @@
-import { supabase } from '@/lib/supabase';
+export const dynamic = 'force-dynamic';
+
+import { getSupabase } from '@/lib/supabase';
 import { DEFAULT_LINK } from '@/lib/socios';
 import Navbar from '@/components/Navbar';
 import Hero   from '@/components/Hero';
-
-export const dynamic = 'force-dynamic';
 
 export default async function SocioPage({
   params,
 }: {
   params: { socio: string };
 }) {
+  const supabase = getSupabase();
+
   const { data } = await supabase
     .from('socios')
     .select('link')

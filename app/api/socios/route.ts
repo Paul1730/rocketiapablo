@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 import { slugify } from '@/lib/slugify';
 
 export async function POST(req: NextRequest) {
@@ -11,9 +11,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Todos los campos son requeridos.' }, { status: 400 });
   }
 
+  const supabase = getSupabase();
   const slug = slugify(nombre.trim(), apellido.trim());
 
-  // Check duplicado por nombre + apellido (case-insensitive)
   const { data: existing } = await supabase
     .from('socios')
     .select('id')
@@ -40,6 +40,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
+  const supabase = getSupabase();
+
   const { data, error } = await supabase
     .from('socios')
     .select('*')
@@ -54,6 +56,7 @@ export async function GET() {
 
 export async function DELETE(req: NextRequest) {
   const { id } = await req.json();
+  const supabase = getSupabase();
 
   const { error } = await supabase.from('socios').delete().eq('id', id);
 

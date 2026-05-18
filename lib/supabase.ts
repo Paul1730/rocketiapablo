@@ -4,6 +4,7 @@ export interface SocioRow {
   id:         string;
   nombre:     string;
   apellido:   string;
+  email:      string;
   slug:       string;
   link:       string;
   created_at: string;

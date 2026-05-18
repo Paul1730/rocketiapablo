@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Copy, Check, Rocket, Users, Link2, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Copy, Check, Rocket, Users, Link2, Mail, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { slugify } from '@/lib/slugify';
 import type { SocioRow } from '@/lib/supabase';
 
@@ -12,6 +12,7 @@ const BASE_URL =
 export default function AdminPage() {
   const [nombre,   setNombre]   = useState('');
   const [apellido, setApellido] = useState('');
+  const [email,    setEmail]    = useState('');
   const [link,     setLink]     = useState('');
   const [loading,  setLoading]  = useState(false);
   const [socios,   setSocios]   = useState<SocioRow[]>([]);
@@ -40,7 +41,7 @@ export default function AdminPage() {
     const res = await fetch('/api/socios', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre, apellido, link }),
+      body: JSON.stringify({ nombre, apellido, email, link }),
     });
 
     const data = await res.json();
@@ -57,6 +58,7 @@ export default function AdminPage() {
     });
     setNombre('');
     setApellido('');
+    setEmail('');
     setLink('');
     fetchSocios();
   };
@@ -187,6 +189,30 @@ export default function AdminPage() {
                     onFocus={e => (e.target.style.borderColor = 'rgba(0,210,255,0.4)')}
                     onBlur={e  => (e.target.style.borderColor = 'rgba(255,255,255,0.08)')}
                   />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-2">
+                    Correo Electrónico
+                  </label>
+                  <div className="relative">
+                    <Mail size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      placeholder="socio@email.com"
+                      required
+                      className="w-full pl-10 pr-4 py-3 rounded-xl font-medium text-white placeholder:text-white/20 outline-none transition-all duration-200"
+                      style={{
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                      }}
+                      onFocus={e => (e.target.style.borderColor = 'rgba(0,210,255,0.4)')}
+                      onBlur={e  => (e.target.style.borderColor = 'rgba(255,255,255,0.08)')}
+                    />
+                  </div>
                 </div>
 
                 {/* Link */}
@@ -346,6 +372,10 @@ export default function AdminPage() {
                           </p>
                           <p className="text-xs text-rocket-cyan/70 truncate font-medium mt-0.5">
                             /{s.slug}
+                          </p>
+                          <p className="text-xs text-white/30 truncate mt-0.5 flex items-center gap-1">
+                            <Mail size={10} />
+                            {s.email}
                           </p>
                         </div>
 

@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 
+import { notFound } from 'next/navigation';
 import { getSupabase } from '@/lib/supabase';
-import { DEFAULT_LINK } from '@/lib/socios';
 import Navbar from '@/components/Navbar';
 import Hero   from '@/components/Hero';
 
@@ -18,12 +18,12 @@ export default async function SocioPage({
     .eq('slug', params.socio.toLowerCase())
     .maybeSingle();
 
-  const link = data?.link ?? DEFAULT_LINK;
+  if (!data) notFound();
 
   return (
     <main className="min-h-screen bg-rocket-dark">
       <Navbar />
-      <Hero ctaLink={link} />
+      <Hero ctaLink={data.link} />
     </main>
   );
 }

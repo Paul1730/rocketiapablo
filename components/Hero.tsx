@@ -53,8 +53,8 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
 
   /* shared button style helper */
   const btnStyle = (enabled: boolean, gradient: string, glow: string) => ({
-    padding: '18px 36px',
-    fontSize: 'clamp(15px, 1.5vw, 19px)',
+    padding: 'clamp(12px, 2vw, 18px) clamp(16px, 3vw, 36px)',
+    fontSize: 'clamp(13px, 1.5vw, 19px)',
     background:   enabled ? gradient : 'rgba(255,255,255,0.04)',
     border:       enabled ? '1.5px solid rgba(255,255,255,0.15)' : '1.5px solid rgba(255,255,255,0.08)',
     boxShadow:    enabled ? glow : 'none',
@@ -252,7 +252,7 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 mb-10"
+            className="flex flex-row items-center justify-center gap-2 sm:gap-4 mt-10 mb-10"
           >
             {/* Invierte Ahora */}
             <motion.a

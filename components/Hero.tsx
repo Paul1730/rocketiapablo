@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Lock, TrendingUp, Volume2, VolumeX, ClipboardList } from 'lucide-react';
+import { ArrowRight, Lock, TrendingUp, Volume2, VolumeX, ClipboardList, Timer } from 'lucide-react';
 import OrbitalRings from './ui/OrbitalRings';
 import FloatingIcons from './ui/FloatingIcons';
 import { DEFAULT_LINK } from '@/lib/socios';
@@ -14,6 +14,29 @@ const fadeUp = (delay = 0) => ({
 });
 
 const AVATARS = ['/foto1.png', '/foto2.png', '/foto3.png'];
+
+const TESTIMONIALS = [
+  {
+    avatar: '/foto1.png',
+    name: 'María González',
+    role: 'Emprendedora Digital',
+    quote: 'Con Rocket iA™ automaticé mis ventas y generé $2,800 en mi primer mes. Nunca pensé que fuera tan rápido.',
+  },
+  {
+    avatar: '/foto2.png',
+    name: 'Carlos Mendoza',
+    role: 'Coach de Negocios',
+    quote: 'Los agentes de IA cambiaron todo. Pasé de trabajar 12 horas al día a escalar sin límites desde mi celular.',
+  },
+  {
+    avatar: '/foto3.png',
+    name: 'Ana Rodríguez',
+    role: 'Consultora de Marketing',
+    quote: 'En 60 días pasé de $900 a $3,400 mensuales. Las herramientas son increíbles y el soporte es top.',
+  },
+];
+
+const UNLOCK_SECONDS = 300; // 5 minutos
 
 const DEFAULT_WHATSAPP = '+50371807574';
 
@@ -27,9 +50,28 @@ interface HeroProps {
 export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP, registroPath = '/registro', nombre }: HeroProps) {
   const [ctaEnabled, setCtaEnabled] = useState(false);
   const [isMuted,    setIsMuted]    = useState(true);
-  const videoRef      = useRef<HTMLVideoElement>(null);
-  const progressRef   = useRef<HTMLDivElement>(null);
-  const enabledRef    = useRef(false);
+  const [countdown,  setCountdown]  = useState(UNLOCK_SECONDS);
+  const videoRef    = useRef<HTMLVideoElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const enabledRef  = useRef(false);
+
+  /* 5-minute countdown timer */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          if (!enabledRef.current) {
+            enabledRef.current = true;
+            setCtaEnabled(true);
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleTimeUpdate = useCallback(() => {
     const video = videoRef.current;
@@ -37,10 +79,6 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
     const pct = video.currentTime / video.duration;
     if (progressRef.current) {
       progressRef.current.style.width = `${pct * 100}%`;
-    }
-    if (pct >= 0.7 && !enabledRef.current) {
-      enabledRef.current = true;
-      setCtaEnabled(true);
     }
   }, []);
 
@@ -50,6 +88,9 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
     video.muted = !video.muted;
     setIsMuted(video.muted);
   }, []);
+
+  const fmtCountdown = (s: number) =>
+    `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
   /* shared button style helper */
   const btnStyle = (enabled: boolean, gradient: string, glow: string) => ({
@@ -68,7 +109,7 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
     <>
       <section
         id="inicio"
-        className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden grid-bg"
+        className="relative flex flex-col items-center justify-center pt-24 pb-16 overflow-hidden grid-bg"
       >
         {/* Background */}
         <div
@@ -127,8 +168,9 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             className="max-w-2xl mx-auto font-sans font-normal leading-relaxed mb-10"
             style={{ fontSize: 'clamp(15px, 2vw, 19px)', color: '#A8BCCF' }}
           >
-            8 herramientas inteligentes + capacitación avanzada + agentes especializados
-            para <strong className="text-white font-semibold">crear, vender y escalar</strong> tu negocio con IA.
+            Mira como la Inteligencia Artificial te ayuda a colocar{' '}
+            <strong className="text-white font-semibold">$2,580 dólares extras</strong>{' '}
+            al mes en tu bolsillo.
           </motion.p>
 
           {/* VIDEO */}
@@ -226,7 +268,7 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
               </div>
             </div>
 
-            {/* Unlock hint */}
+            {/* Unlock hint — countdown */}
             {!ctaEnabled && (
               <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -241,8 +283,8 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
                   textShadow: '0 0 12px rgba(0,210,255,0.8)',
                 }}
               >
-                <Lock size={11} />
-                El botón se activa cuando completes el 70% del video
+                <Timer size={11} />
+                Los botones se activan en {fmtCountdown(countdown)}
               </motion.div>
             )}
           </motion.div>
@@ -252,7 +294,7 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-row items-center justify-center gap-2 sm:gap-4 mt-10 mb-10"
+            className="flex flex-row items-center justify-center gap-2 sm:gap-4 mt-10 mb-4"
           >
             {/* Invierte Ahora */}
             <motion.a
@@ -301,15 +343,26 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
 
           {/* Nombre del socio / propietario */}
           {nombre && (
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="text-sm font-semibold mb-8"
-              style={{ color: 'rgba(168,188,207,0.6)' }}
+              transition={{ duration: 0.6, delay: 0.68, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center justify-center gap-2 mb-10"
             >
-              {nombre}
-            </motion.p>
+              <span className="w-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,210,255,0.4))' }} />
+              <span
+                className="text-sm font-bold tracking-wide"
+                style={{
+                  background: 'linear-gradient(90deg, #00D2FF, #a78bfa)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  filter: 'drop-shadow(0 0 8px rgba(0,210,255,0.3))',
+                }}
+              >
+                {nombre}
+              </span>
+              <span className="w-8 h-px" style={{ background: 'linear-gradient(90deg, rgba(139,92,246,0.4), transparent)' }} />
+            </motion.div>
           )}
 
           {/* SOCIAL PROOF */}
@@ -348,6 +401,57 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
               <span className="text-sm text-white/50 font-medium">Rating</span>
             </div>
           </motion.div>
+
+          {/* ── TESTIMONIALES ───────────────────────────────────── */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4"
+          >
+            {TESTIMONIALS.map((t, i) => (
+              <div
+                key={i}
+                className="flex flex-col gap-4 p-5 rounded-2xl text-left"
+                style={{
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+                }}
+              >
+                {/* Stars */}
+                <div className="flex items-center gap-0.5">
+                  {[...Array(5)].map((_, s) => (
+                    <svg key={s} width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37"
+                      style={{ filter: 'drop-shadow(0 0 3px rgba(212,175,55,0.5))' }}>
+                      <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                    </svg>
+                  ))}
+                </div>
+
+                {/* Quote */}
+                <p className="text-sm leading-relaxed flex-1" style={{ color: 'rgba(168,188,207,0.85)' }}>
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-3">
+                  <div
+                    className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0"
+                    style={{ border: '1.5px solid rgba(0,210,255,0.2)', boxShadow: '0 0 8px rgba(0,210,255,0.1)' }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={t.avatar} alt={t.name} className="w-full h-full object-cover bg-slate-700" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-white">{t.name}</p>
+                    <p className="text-[11px]" style={{ color: 'rgba(168,188,207,0.5)' }}>{t.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
         </div>
 
         {/* Bottom fade */}
@@ -356,7 +460,6 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
           style={{ background: 'linear-gradient(to bottom, transparent, rgba(5,8,20,0.8))' }}
         />
       </section>
-
     </>
   );
 }

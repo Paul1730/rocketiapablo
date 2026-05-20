@@ -24,18 +24,20 @@ interface HeroProps {
 }
 
 export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP }: HeroProps) {
-  const [ctaEnabled,     setCtaEnabled]     = useState(false);
-  const [videoProgress,  setVideoProgress]  = useState(0);
-  const [isMuted,        setIsMuted]        = useState(true);
-  const [registroOpen,   setRegistroOpen]   = useState(false);
-  const videoRef   = useRef<HTMLVideoElement>(null);
-  const enabledRef = useRef(false);
+  const [ctaEnabled,   setCtaEnabled]   = useState(false);
+  const [isMuted,      setIsMuted]      = useState(true);
+  const [registroOpen, setRegistroOpen] = useState(false);
+  const videoRef      = useRef<HTMLVideoElement>(null);
+  const progressRef   = useRef<HTMLDivElement>(null);
+  const enabledRef    = useRef(false);
 
   const handleTimeUpdate = useCallback(() => {
     const video = videoRef.current;
     if (!video || !video.duration) return;
     const pct = video.currentTime / video.duration;
-    setVideoProgress(pct);
+    if (progressRef.current) {
+      progressRef.current.style.width = `${pct * 100}%`;
+    }
     if (pct >= 0.7 && !enabledRef.current) {
       enabledRef.current = true;
       setCtaEnabled(true);
@@ -212,10 +214,11 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
 
               {/* Progress bar */}
               <div className="absolute bottom-0 inset-x-0 h-1 bg-white/10">
-                <motion.div
+                <div
+                  ref={progressRef}
                   className="h-full rounded-full"
                   style={{
-                    width: `${videoProgress * 100}%`,
+                    width: '0%',
                     background: 'linear-gradient(90deg, #00D2FF, #8B5CF6)',
                     boxShadow: '0 0 8px rgba(0,210,255,0.5)',
                   }}

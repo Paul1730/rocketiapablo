@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-rocket-dark">
       <Navbar />
-      <Hero />
+      <Hero nombre="Pablo Landos" />
       <WhatsAppButton number="+50371807574" />
     </main>
   );

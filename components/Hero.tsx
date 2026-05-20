@@ -21,9 +21,10 @@ interface HeroProps {
   ctaLink?:      string;
   whatsapp?:     string;
   registroPath?: string;
+  nombre?:       string;
 }
 
-export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP, registroPath = '/registro' }: HeroProps) {
+export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP, registroPath = '/registro', nombre }: HeroProps) {
   const [ctaEnabled, setCtaEnabled] = useState(false);
   const [isMuted,    setIsMuted]    = useState(true);
   const videoRef      = useRef<HTMLVideoElement>(null);
@@ -297,6 +298,19 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
               }
             </motion.a>
           </motion.div>
+
+          {/* Nombre del socio / propietario */}
+          {nombre && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              className="text-sm font-semibold mb-8"
+              style={{ color: 'rgba(168,188,207,0.6)' }}
+            >
+              {nombre}
+            </motion.p>
+          )}
 
           {/* SOCIAL PROOF */}
           <motion.div

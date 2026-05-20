@@ -15,7 +15,7 @@ export default async function SocioPage({
 
   const { data } = await supabase
     .from('socios')
-    .select('link, whatsapp')
+    .select('nombre, apellido, link, whatsapp')
     .eq('slug', params.socio.toLowerCase())
     .maybeSingle();
 
@@ -24,7 +24,7 @@ export default async function SocioPage({
   return (
     <main className="min-h-screen bg-rocket-dark">
       <Navbar />
-      <Hero ctaLink={data.link} registroPath={`/${params.socio}/registro`} />
+      <Hero ctaLink={data.link} registroPath={`/${params.socio}/registro`} nombre={`${data.nombre} ${data.apellido}`} />
       <WhatsAppButton number={data.whatsapp || '+50371807574'} />
     </main>
   );

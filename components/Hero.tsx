@@ -169,7 +169,18 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             style={{ fontSize: 'clamp(15px, 2vw, 19px)', color: '#A8BCCF' }}
           >
             Mira como la Inteligencia Artificial te ayuda a colocar{' '}
-            <strong className="text-white font-semibold">$2,580 dólares extras</strong>{' '}
+            <strong
+              className="font-black"
+              style={{
+                fontSize: 'clamp(20px, 3vw, 32px)',
+                color: '#22c55e',
+                textShadow: '0 0 24px rgba(34,197,94,0.7), 0 0 48px rgba(34,197,94,0.3)',
+                display: 'inline-block',
+                lineHeight: 1.1,
+              }}
+            >
+              $2,580 dólares extras
+            </strong>{' '}
             al mes en tu bolsillo.
           </motion.p>
 
@@ -407,45 +418,45 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-4"
+            className="mt-14 grid grid-cols-1 sm:grid-cols-3 gap-6"
           >
             {TESTIMONIALS.map((t, i) => (
               <div
                 key={i}
-                className="flex flex-col gap-4 p-5 rounded-2xl text-left"
+                className="flex flex-col gap-5 p-7 rounded-3xl text-left"
                 style={{
-                  background: 'rgba(255,255,255,0.03)',
-                  border: '1px solid rgba(255,255,255,0.07)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.05)',
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.09)',
+                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3)',
                 }}
               >
                 {/* Stars */}
-                <div className="flex items-center gap-0.5">
+                <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, s) => (
-                    <svg key={s} width="13" height="13" viewBox="0 0 24 24" fill="#D4AF37"
-                      style={{ filter: 'drop-shadow(0 0 3px rgba(212,175,55,0.5))' }}>
+                    <svg key={s} width="18" height="18" viewBox="0 0 24 24" fill="#D4AF37"
+                      style={{ filter: 'drop-shadow(0 0 4px rgba(212,175,55,0.6))' }}>
                       <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
                     </svg>
                   ))}
                 </div>
 
                 {/* Quote */}
-                <p className="text-sm leading-relaxed flex-1" style={{ color: 'rgba(168,188,207,0.85)' }}>
+                <p className="leading-relaxed flex-1" style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(168,188,207,0.9)' }}>
                   &ldquo;{t.quote}&rdquo;
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 pt-1 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
                   <div
-                    className="w-9 h-9 rounded-full overflow-hidden flex-shrink-0"
-                    style={{ border: '1.5px solid rgba(0,210,255,0.2)', boxShadow: '0 0 8px rgba(0,210,255,0.1)' }}
+                    className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0"
+                    style={{ border: '2px solid rgba(0,210,255,0.25)', boxShadow: '0 0 12px rgba(0,210,255,0.15)' }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={t.avatar} alt={t.name} className="w-full h-full object-cover bg-slate-700" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold text-white">{t.name}</p>
-                    <p className="text-[11px]" style={{ color: 'rgba(168,188,207,0.5)' }}>{t.role}</p>
+                    <p className="text-sm font-bold text-white">{t.name}</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'rgba(168,188,207,0.5)' }}>{t.role}</p>
                   </div>
                 </div>
               </div>

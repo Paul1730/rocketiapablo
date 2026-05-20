@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { TrendingUp, ArrowRight } from 'lucide-react';
+import { ClipboardList, ArrowRight } from 'lucide-react';
 
 const VIDEO_URL =
   'https://anbshiqmblyizfzaqydn.supabase.co/storage/v1/object/public/VSL/RegistroGlobalRocket.mp4';
@@ -137,8 +137,8 @@ export default function RegistroPageContent({ ctaLink }: Props) {
               boxShadow: '0 0 40px rgba(0,210,255,0.35), 0 0 80px rgba(139,92,246,0.2)',
             }}
           >
-            <TrendingUp size={20} />
-            Invierte Ahora
+            <ClipboardList size={20} />
+            Registro Aquí
             <ArrowRight size={20} />
             <span
               className="absolute inset-0 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-500"

@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Lock, TrendingUp, Volume2, VolumeX, ClipboardList } from 'lucide-react';
 import OrbitalRings from './ui/OrbitalRings';
 import FloatingIcons from './ui/FloatingIcons';
-import RegistroModal from './RegistroModal';
 import { DEFAULT_LINK } from '@/lib/socios';
 
 const fadeUp = (delay = 0) => ({
@@ -19,14 +18,14 @@ const AVATARS = ['/foto1.png', '/foto2.png', '/foto3.png'];
 const DEFAULT_WHATSAPP = '+50371807574';
 
 interface HeroProps {
-  ctaLink?:   string;
-  whatsapp?:  string;
+  ctaLink?:      string;
+  whatsapp?:     string;
+  registroPath?: string;
 }
 
-export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP }: HeroProps) {
-  const [ctaEnabled,   setCtaEnabled]   = useState(false);
-  const [isMuted,      setIsMuted]      = useState(true);
-  const [registroOpen, setRegistroOpen] = useState(false);
+export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP, registroPath = '/registro' }: HeroProps) {
+  const [ctaEnabled, setCtaEnabled] = useState(false);
+  const [isMuted,    setIsMuted]    = useState(true);
   const videoRef      = useRef<HTMLVideoElement>(null);
   const progressRef   = useRef<HTMLDivElement>(null);
   const enabledRef    = useRef(false);
@@ -281,8 +280,8 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             </motion.a>
 
             {/* Registro */}
-            <motion.button
-              onClick={() => ctaEnabled && setRegistroOpen(true)}
+            <motion.a
+              href={ctaEnabled ? registroPath : undefined}
               whileHover={ctaEnabled ? { scale: 1.05 } : {}}
               whileTap={ctaEnabled  ? { scale: 0.97 } : {}}
               className="inline-flex items-center justify-center gap-2.5 font-black text-white transition-all duration-500 select-none"
@@ -296,7 +295,7 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
                 ? <><ClipboardList size={20} />Registro<ArrowRight size={20} /></>
                 : <><Lock size={18} />Registro</>
               }
-            </motion.button>
+            </motion.a>
           </motion.div>
 
           {/* SOCIAL PROOF */}
@@ -344,8 +343,6 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
         />
       </section>
 
-      {/* Modal de registro */}
-      <RegistroModal open={registroOpen} onClose={() => setRegistroOpen(false)} />
     </>
   );
 }

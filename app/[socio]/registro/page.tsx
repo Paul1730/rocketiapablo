@@ -1,12 +1,12 @@
 export const dynamic = 'force-dynamic';
 
-import { notFound } from 'next/navigation';
-import { getSupabase } from '@/lib/supabase';
-import Navbar         from '@/components/Navbar';
-import Hero           from '@/components/Hero';
-import WhatsAppButton from '@/components/WhatsAppButton';
+import { notFound }        from 'next/navigation';
+import { getSupabase }     from '@/lib/supabase';
+import Navbar              from '@/components/Navbar';
+import RegistroPageContent from '@/components/RegistroPageContent';
+import WhatsAppButton      from '@/components/WhatsAppButton';
 
-export default async function SocioPage({
+export default async function SocioRegistroPage({
   params,
 }: {
   params: { socio: string };
@@ -24,7 +24,7 @@ export default async function SocioPage({
   return (
     <main className="min-h-screen bg-rocket-dark">
       <Navbar />
-      <Hero ctaLink={data.link} registroPath={`/${params.socio}/registro`} />
+      <RegistroPageContent ctaLink={data.link} />
       <WhatsAppButton number={data.whatsapp || '+50371807574'} />
     </main>
   );

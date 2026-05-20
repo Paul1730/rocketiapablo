@@ -10,7 +10,7 @@ export default function Footer() {
 
         <div>
           <p className="text-sm font-semibold" style={{ color: 'rgba(168,188,207,0.55)' }}>
-            Copyright 2025 – Rocket iA™
+            Copyright 2026-2027 – Rocket iA™
           </p>
           <p className="text-xs mt-0.5" style={{ color: 'rgba(168,188,207,0.35)' }}>
             Todos los Derechos Reservados

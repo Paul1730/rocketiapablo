@@ -2,8 +2,9 @@ export const dynamic = 'force-dynamic';
 
 import { notFound } from 'next/navigation';
 import { getSupabase } from '@/lib/supabase';
-import Navbar from '@/components/Navbar';
-import Hero   from '@/components/Hero';
+import Navbar         from '@/components/Navbar';
+import Hero           from '@/components/Hero';
+import WhatsAppButton from '@/components/WhatsAppButton';
 
 export default async function SocioPage({
   params,
@@ -14,7 +15,7 @@ export default async function SocioPage({
 
   const { data } = await supabase
     .from('socios')
-    .select('link')
+    .select('link, whatsapp')
     .eq('slug', params.socio.toLowerCase())
     .maybeSingle();
 
@@ -24,6 +25,7 @@ export default async function SocioPage({
     <main className="min-h-screen bg-rocket-dark">
       <Navbar />
       <Hero ctaLink={data.link} />
+      <WhatsAppButton number={data.whatsapp || '+50371807574'} />
     </main>
   );
 }

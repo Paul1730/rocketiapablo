@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Copy, Check, Rocket, Users, Link2, Mail, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Copy, Check, Rocket, Users, Link2, Mail, Phone, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { slugify } from '@/lib/slugify';
 import type { SocioRow } from '@/lib/supabase';
 
@@ -10,10 +10,11 @@ const BASE_URL =
   typeof window !== 'undefined' ? window.location.origin : '';
 
 export default function AdminPage() {
-  const [nombre,   setNombre]   = useState('');
-  const [apellido, setApellido] = useState('');
-  const [email,    setEmail]    = useState('');
-  const [link,     setLink]     = useState('');
+  const [nombre,    setNombre]    = useState('');
+  const [apellido,  setApellido]  = useState('');
+  const [email,     setEmail]     = useState('');
+  const [link,      setLink]      = useState('');
+  const [whatsapp,  setWhatsapp]  = useState('');
   const [loading,  setLoading]  = useState(false);
   const [socios,   setSocios]   = useState<SocioRow[]>([]);
   const [fetching, setFetching] = useState(true);
@@ -41,7 +42,7 @@ export default function AdminPage() {
     const res = await fetch('/api/socios', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre, apellido, email, link }),
+      body: JSON.stringify({ nombre, apellido, email, link, whatsapp }),
     });
 
     const data = await res.json();
@@ -60,6 +61,7 @@ export default function AdminPage() {
     setApellido('');
     setEmail('');
     setLink('');
+    setWhatsapp('');
     fetchSocios();
   };
 
@@ -228,6 +230,29 @@ export default function AdminPage() {
                       onChange={e => setLink(e.target.value)}
                       placeholder="https://belezateam.com/link/page/..."
                       required
+                      className="w-full pl-10 pr-4 py-3 rounded-xl font-medium text-white placeholder:text-white/20 outline-none transition-all duration-200"
+                      style={{
+                        background: 'rgba(255,255,255,0.04)',
+                        border: '1px solid rgba(255,255,255,0.08)',
+                      }}
+                      onFocus={e => (e.target.style.borderColor = 'rgba(0,210,255,0.4)')}
+                      onBlur={e  => (e.target.style.borderColor = 'rgba(255,255,255,0.08)')}
+                    />
+                  </div>
+                </div>
+
+                {/* WhatsApp */}
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-2">
+                    WhatsApp <span className="normal-case font-medium text-white/25">(opcional, ej: +50371807574)</span>
+                  </label>
+                  <div className="relative">
+                    <Phone size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25" />
+                    <input
+                      type="tel"
+                      value={whatsapp}
+                      onChange={e => setWhatsapp(e.target.value)}
+                      placeholder="+50371807574"
                       className="w-full pl-10 pr-4 py-3 rounded-xl font-medium text-white placeholder:text-white/20 outline-none transition-all duration-200"
                       style={{
                         background: 'rgba(255,255,255,0.04)',

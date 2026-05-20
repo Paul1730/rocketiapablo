@@ -7,6 +7,7 @@ export interface SocioRow {
   email:      string;
   slug:       string;
   link:       string;
+  whatsapp:   string;
   created_at: string;
 }
 

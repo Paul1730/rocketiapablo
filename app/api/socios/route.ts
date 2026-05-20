@@ -5,7 +5,7 @@ import { getSupabase } from '@/lib/supabase';
 import { slugify } from '@/lib/slugify';
 
 export async function POST(req: NextRequest) {
-  const { nombre, apellido, email, link } = await req.json();
+  const { nombre, apellido, email, link, whatsapp } = await req.json();
 
   if (!nombre?.trim() || !apellido?.trim() || !email?.trim() || !link?.trim()) {
     return NextResponse.json({ error: 'Todos los campos son requeridos.' }, { status: 400 });
@@ -51,7 +51,14 @@ export async function POST(req: NextRequest) {
 
   const { error } = await supabase
     .from('socios')
-    .insert({ nombre: nombre.trim(), apellido: apellido.trim(), email: email.trim().toLowerCase(), slug, link: link.trim() });
+    .insert({
+      nombre:   nombre.trim(),
+      apellido: apellido.trim(),
+      email:    email.trim().toLowerCase(),
+      slug,
+      link:     link.trim(),
+      whatsapp: whatsapp?.trim() || '+50371807574',
+    });
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

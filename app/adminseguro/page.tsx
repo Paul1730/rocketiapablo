@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, Copy, Check, Rocket, Users, Link2, Mail, Phone, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
+import { Plus, Trash2, Copy, Check, Rocket, Users, Link2, Mail, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import { slugify } from '@/lib/slugify';
 import type { SocioRow } from '@/lib/supabase';
+import PhoneInput from '@/components/PhoneInput';
 
 const BASE_URL =
   typeof window !== 'undefined' ? window.location.origin : '';
@@ -244,24 +245,9 @@ export default function AdminPage() {
                 {/* WhatsApp */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-2">
-                    WhatsApp <span className="normal-case font-medium text-white/25">(opcional, ej: +50371807574)</span>
+                    WhatsApp <span className="normal-case font-medium text-white/25">(opcional)</span>
                   </label>
-                  <div className="relative">
-                    <Phone size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/25" />
-                    <input
-                      type="tel"
-                      value={whatsapp}
-                      onChange={e => setWhatsapp(e.target.value)}
-                      placeholder="+50371807574"
-                      className="w-full pl-10 pr-4 py-3 rounded-xl font-medium text-white placeholder:text-white/20 outline-none transition-all duration-200"
-                      style={{
-                        background: 'rgba(255,255,255,0.04)',
-                        border: '1px solid rgba(255,255,255,0.08)',
-                      }}
-                      onFocus={e => (e.target.style.borderColor = 'rgba(0,210,255,0.4)')}
-                      onBlur={e  => (e.target.style.borderColor = 'rgba(255,255,255,0.08)')}
-                    />
-                  </div>
+                  <PhoneInput value={whatsapp} onChange={setWhatsapp} />
                 </div>
 
                 {/* URL preview */}

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Lock, TrendingUp, Volume2, VolumeX, ClipboardList, Timer } from 'lucide-react';
+import { ArrowRight, Lock, ClipboardList, Timer } from 'lucide-react';
 import OrbitalRings from './ui/OrbitalRings';
 import FloatingIcons from './ui/FloatingIcons';
 import { DEFAULT_LINK } from '@/lib/socios';
@@ -36,9 +36,9 @@ const TESTIMONIALS = [
   },
 ];
 
-const UNLOCK_SECONDS = 300; // 5 minutos
-
+const UNLOCK_SECONDS = 300;
 const DEFAULT_WHATSAPP = '+50371807574';
+const YT_VIDEO_ID = 'c4KLMVpLHWE';
 
 interface HeroProps {
   ctaLink?:      string;
@@ -49,13 +49,9 @@ interface HeroProps {
 
 export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSAPP, registroPath = '/registro', nombre }: HeroProps) {
   const [ctaEnabled, setCtaEnabled] = useState(false);
-  const [isMuted,    setIsMuted]    = useState(true);
   const [countdown,  setCountdown]  = useState(UNLOCK_SECONDS);
-  const videoRef    = useRef<HTMLVideoElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const enabledRef  = useRef(false);
+  const enabledRef = useRef(false);
 
-  /* 5-minute countdown timer */
   useEffect(() => {
     const interval = setInterval(() => {
       setCountdown(prev => {
@@ -73,29 +69,12 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
     return () => clearInterval(interval);
   }, []);
 
-  const handleTimeUpdate = useCallback(() => {
-    const video = videoRef.current;
-    if (!video || !video.duration) return;
-    const pct = video.currentTime / video.duration;
-    if (progressRef.current) {
-      progressRef.current.style.width = `${pct * 100}%`;
-    }
-  }, []);
-
-  const toggleMute = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    setIsMuted(video.muted);
-  }, []);
-
   const fmtCountdown = (s: number) =>
     `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
-  /* shared button style helper */
   const btnStyle = (enabled: boolean, gradient: string, glow: string) => ({
-    padding: 'clamp(12px, 2vw, 18px) clamp(16px, 3vw, 36px)',
-    fontSize: 'clamp(13px, 1.5vw, 19px)',
+    padding: 'clamp(14px, 2vw, 20px) clamp(28px, 4vw, 52px)',
+    fontSize: 'clamp(14px, 1.5vw, 19px)',
     background:   enabled ? gradient : 'rgba(255,255,255,0.04)',
     border:       enabled ? '1.5px solid rgba(255,255,255,0.15)' : '1.5px solid rgba(255,255,255,0.08)',
     boxShadow:    enabled ? glow : 'none',
@@ -148,47 +127,41 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             </span>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline principal — $2,580 */}
           <motion.h1
             {...fadeUp(0.2)}
-            className="font-display font-black leading-[0.96] tracking-[-0.025em] text-white mb-4"
-            style={{ fontSize: 'clamp(40px, 7.5vw, 92px)' }}
-          >
-            <span className="block">La Suite de IA Definitiva</span>
-            <span className="block mt-1">
-              Para Emprendedores{' '}
-              <span className="relative inline-block underline-gradient">Visionarios</span>
-              <span className="text-rocket-cyan" style={{ filter: 'drop-shadow(0 0 12px rgba(0,210,255,0.8))' }}>.</span>
-            </span>
-          </motion.h1>
-
-          {/* Subheadline */}
-          <motion.p
-            {...fadeUp(0.32)}
-            className="max-w-2xl mx-auto font-sans font-normal leading-relaxed mb-10"
-            style={{ fontSize: 'clamp(15px, 2vw, 19px)', color: '#A8BCCF' }}
+            className="font-display font-black tracking-[-0.02em] text-white mb-3"
+            style={{ fontSize: 'clamp(32px, 5.5vw, 72px)', lineHeight: 1.05 }}
           >
             Mira como la Inteligencia Artificial te ayuda a colocar{' '}
-            <strong
+            <span
               className="font-black"
               style={{
-                fontSize: 'clamp(20px, 3vw, 32px)',
                 color: '#22c55e',
-                textShadow: '0 0 24px rgba(34,197,94,0.7), 0 0 48px rgba(34,197,94,0.3)',
-                display: 'inline-block',
-                lineHeight: 1.1,
+                textShadow: '0 0 30px rgba(34,197,94,0.8), 0 0 60px rgba(34,197,94,0.35)',
               }}
             >
               $2,580 dólares extras
-            </strong>{' '}
+            </span>{' '}
             al mes en tu bolsillo.
+          </motion.h1>
+
+          {/* Subheadline — suite */}
+          <motion.p
+            {...fadeUp(0.3)}
+            className="max-w-xl mx-auto font-sans font-medium leading-snug mb-10"
+            style={{ fontSize: 'clamp(15px, 1.8vw, 21px)', color: 'rgba(168,188,207,0.7)' }}
+          >
+            La Suite de IA Definitiva · Para Emprendedores{' '}
+            <span className="relative inline-block underline-gradient text-white">Visionarios</span>
+            <span className="text-rocket-cyan" style={{ filter: 'drop-shadow(0 0 10px rgba(0,210,255,0.8))' }}>.</span>
           </motion.p>
 
-          {/* VIDEO */}
+          {/* VIDEO — YouTube embed */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.9, delay: 0.38, ease: [0.22, 1, 0.36, 1] }}
             className="relative w-full mb-8"
           >
             <div
@@ -203,83 +176,20 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
               style={{
                 border: '1.5px solid rgba(0,210,255,0.2)',
                 boxShadow: '0 40px 100px rgba(0,0,0,0.55), 0 0 60px rgba(0,210,255,0.06)',
-                background: 'rgba(5,8,20,0.95)',
+                background: '#000',
+                aspectRatio: '16/9',
               }}
             >
-              <video
-                ref={videoRef}
-                src="https://anbshiqmblyizfzaqydn.supabase.co/storage/v1/object/public/VSL/VSL_RocketIA.mp4"
-                autoPlay muted playsInline
-                onTimeUpdate={handleTimeUpdate}
-                className="w-full block"
-                style={{ maxHeight: '60vh', objectFit: 'cover' }}
+              <iframe
+                src={`https://www.youtube.com/embed/${YT_VIDEO_ID}?rel=0&modestbranding=1`}
+                title="Rocket iA™ — Video de presentación"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
               />
-
-              {/* Mute button — centered when muted */}
-              {isMuted && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="absolute inset-0" style={{ background: 'rgba(5,8,20,0.45)' }} />
-                  <motion.button
-                    onClick={toggleMute}
-                    whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.95 }}
-                    aria-label="Activar audio"
-                    className="relative pointer-events-auto flex flex-col items-center gap-3 px-10 py-6 rounded-2xl font-black"
-                    style={{
-                      background: 'linear-gradient(135deg, rgba(0,210,255,0.2), rgba(139,92,246,0.2))',
-                      border: '2px solid rgba(0,210,255,0.6)',
-                      color: '#ffffff',
-                      backdropFilter: 'blur(16px)',
-                      boxShadow: '0 0 40px rgba(0,210,255,0.3), 0 0 80px rgba(0,210,255,0.1)',
-                      textShadow: '0 0 12px rgba(0,210,255,0.6)',
-                    }}
-                    initial={{ opacity: 0, scale: 0.85 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <VolumeX size={36} style={{ filter: 'drop-shadow(0 0 10px rgba(0,210,255,0.8))' }} />
-                    <span style={{ fontSize: 'clamp(16px, 2vw, 22px)', letterSpacing: '0.02em' }}>
-                      🔊 Activar Audio
-                    </span>
-                  </motion.button>
-                </div>
-              )}
-
-              {/* Small audio-active indicator */}
-              {!isMuted && (
-                <motion.button
-                  onClick={toggleMute}
-                  whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.93 }}
-                  aria-label="Silenciar"
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                  className="absolute top-4 right-4 flex items-center gap-2 px-3 py-2 rounded-full font-bold text-sm"
-                  style={{
-                    background: 'rgba(0,210,255,0.15)',
-                    border: '1px solid rgba(0,210,255,0.5)',
-                    color: '#00D2FF',
-                    backdropFilter: 'blur(10px)',
-                    boxShadow: '0 0 16px rgba(0,210,255,0.25)',
-                  }}
-                >
-                  <Volume2 size={15} style={{ filter: 'drop-shadow(0 0 6px rgba(0,210,255,0.7))' }} />
-                  <span>Audio activo</span>
-                </motion.button>
-              )}
-
-              {/* Progress bar */}
-              <div className="absolute bottom-0 inset-x-0 h-1 bg-white/10">
-                <div
-                  ref={progressRef}
-                  className="h-full rounded-full"
-                  style={{
-                    width: '0%',
-                    background: 'linear-gradient(90deg, #00D2FF, #8B5CF6)',
-                    boxShadow: '0 0 8px rgba(0,210,255,0.5)',
-                  }}
-                />
-              </div>
             </div>
 
-            {/* Unlock hint — countdown */}
+            {/* Countdown hint */}
             {!ctaEnabled && (
               <motion.div
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}
@@ -295,45 +205,18 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
                 }}
               >
                 <Timer size={11} />
-                Los botones se activan en {fmtCountdown(countdown)}
+                El botón se activa en {fmtCountdown(countdown)}
               </motion.div>
             )}
           </motion.div>
 
-          {/* ── BOTONES CTA ─────────────────────────────────────── */}
+          {/* ── BOTÓN REGISTRO ─────────────────────────────────── */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-row items-center justify-center gap-2 sm:gap-4 mt-10 mb-4"
+            transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center justify-center mt-10 mb-4"
           >
-            {/* Invierte Ahora */}
-            <motion.a
-              href={ctaEnabled ? ctaLink : undefined}
-              target={ctaEnabled ? '_blank' : undefined}
-              rel={ctaEnabled ? 'noopener noreferrer' : undefined}
-              whileHover={ctaEnabled ? { scale: 1.05 } : {}}
-              whileTap={ctaEnabled  ? { scale: 0.97 } : {}}
-              className="relative inline-flex items-center justify-center gap-2.5 font-black text-white overflow-hidden transition-all duration-500 select-none"
-              style={btnStyle(
-                ctaEnabled,
-                'linear-gradient(90deg, #00D2FF 0%, #8B5CF6 50%, #EC4899 100%)',
-                '0 0 40px rgba(0,210,255,0.35), 0 0 80px rgba(139,92,246,0.2)',
-              )}
-            >
-              {ctaEnabled
-                ? <><TrendingUp size={20} />Invierte Ahora<ArrowRight size={20} /></>
-                : <><Lock size={18} />Invierte Ahora</>
-              }
-              {ctaEnabled && (
-                <span
-                  className="absolute inset-0 rounded-full opacity-0 hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: 'linear-gradient(90deg, #00D2FF, #8B5CF6, #00D2FF)', backgroundSize: '200% auto' }}
-                />
-              )}
-            </motion.a>
-
-            {/* Registro */}
             <motion.a
               href={ctaEnabled ? registroPath : undefined}
               whileHover={ctaEnabled ? { scale: 1.05 } : {}}
@@ -352,18 +235,19 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             </motion.a>
           </motion.div>
 
-          {/* Nombre del socio / propietario */}
+          {/* Nombre + rol */}
           {nombre && (
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.68, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.62, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center justify-center gap-2 mb-10"
             >
               <span className="w-8 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(0,210,255,0.4))' }} />
               <span
-                className="text-sm font-bold tracking-wide"
+                className="font-bold tracking-wide"
                 style={{
+                  fontSize: 'clamp(13px, 1.2vw, 15px)',
                   background: 'linear-gradient(90deg, #00D2FF, #a78bfa)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -371,6 +255,10 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
                 }}
               >
                 {nombre}
+              </span>
+              <span className="text-white/25 font-light" style={{ fontSize: '13px' }}>·</span>
+              <span className="text-xs font-semibold tracking-wide" style={{ color: 'rgba(168,188,207,0.55)' }}>
+                Embajador de Marca
               </span>
               <span className="w-8 h-px" style={{ background: 'linear-gradient(90deg, rgba(139,92,246,0.4), transparent)' }} />
             </motion.div>
@@ -413,7 +301,7 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
             </div>
           </motion.div>
 
-          {/* ── TESTIMONIALES ───────────────────────────────────── */}
+          {/* TESTIMONIALES */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
@@ -430,7 +318,6 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
                   boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.3)',
                 }}
               >
-                {/* Stars */}
                 <div className="flex items-center gap-1">
                   {[...Array(5)].map((_, s) => (
                     <svg key={s} width="18" height="18" viewBox="0 0 24 24" fill="#D4AF37"
@@ -439,13 +326,9 @@ export default function Hero({ ctaLink = DEFAULT_LINK, whatsapp = DEFAULT_WHATSA
                     </svg>
                   ))}
                 </div>
-
-                {/* Quote */}
                 <p className="leading-relaxed flex-1" style={{ fontSize: 'clamp(14px, 1.4vw, 16px)', color: 'rgba(168,188,207,0.9)' }}>
                   &ldquo;{t.quote}&rdquo;
                 </p>
-
-                {/* Author */}
                 <div className="flex items-center gap-3 pt-1 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
                   <div
                     className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0"

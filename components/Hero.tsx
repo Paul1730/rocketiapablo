@@ -18,8 +18,8 @@ const AVATARS = ['/foto1.png', '/foto2.png', '/foto3.png'];
 const TESTIMONIALS = [
   {
     avatar: '/foto1.png',
-    name: 'María González',
-    role: 'Emprendedora Digital',
+    name: 'Pablo L.',
+    role: 'Emprendedor Digital',
     quote: 'Con Rocket iA™ automaticé mis ventas y generé $2,800 en mi primer mes. Nunca pensé que fuera tan rápido.',
   },
   {
